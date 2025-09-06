@@ -1,0 +1,5 @@
+{
+  "token": "TU_DISCORD_BOT_TOKEN",
+  "azuracast_url": "https://tu-servidor-azuracast.com/api/nowplaying/estacion",
+  "azuracast_token": "TU_TOKEN_AZURACAST"
+}
