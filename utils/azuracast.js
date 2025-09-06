@@ -1,16 +1,26 @@
 const fetch = require('node-fetch');
-const config = require('../config.json');
+const { azuracast_url } = require('../config.json');
 
-async function getDJEnVivo() {
-  const res = await fetch(config.azuracast_url, {
-    headers: { Authorization: `Bearer ${config.azuracast_token}` }
-  });
-  const data = await res.json();
+let ultimoDJ = null;
 
-  const dj = data.live.is_live ? data.live.streamer_name : 'AutoDJ';
-  const programa = data.now_playing.song.title;
-
-  return `🎧 **En vivo ahora:** ${dj} — *${programa}*`;
+async function getNowPlaying() {
+  try {
+    const res = await fetch(azuracast_url);
+    const data = await res.json();
+    return data.now_playing.song.artist || 'Desconocido';
+  } catch (err) {
+    console.error('Error al consultar AzuraCast:', err);
+    return null;
+  }
 }
 
-module.exports = { getDJEnVivo };
+async function detectarCambioDJ() {
+  const djActual = await getNowPlaying();
+  if (!djActual || djActual === ultimoDJ) return null;
+
+  const cambio = { anterior: ultimoDJ, nuevo: djActual };
+  ultimoDJ = djActual;
+  return cambio;
+}
+
+module.exports = { detectarCambioDJ };
