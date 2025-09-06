@@ -1,0 +1,17 @@
+{
+  "name": "estacionkus-bot",
+  "version": "1.0.0",
+  "description": "Bot de Discord para Estacionkusmedios",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js"
+  },
+  "author": "Estacionkus",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "node-fetch": "^3.3.2"
+  },
+  "type": "module"
+}
